@@ -196,4 +196,7 @@ public class Point extends Track{
 		return direction;
 	}
 
+	public int getLeft() {
+		return left;
+	}
 }

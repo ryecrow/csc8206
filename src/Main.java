@@ -33,14 +33,26 @@ public class Main {
 
 
         LinkedList<String> signalsforEachRoute = new LinkedList<String>();
-        signalsforEachRoute = track.upPath("s1", "s7");
+        signalsforEachRoute = track.upPath("s1", "s11");
 
         Interlock interlock = new InterlockImpl();
-        String filepath = "./resource/map1.json";
+        String filepath = "./resource/map2.json";
         //create a railway object
         Railway railway = new Railway(filepath);
 
 
+
+        //test here
+        signalsforEachRoute.clear();
+        signalsforEachRoute.add("s1;s4;s8;s11");
+        signalsforEachRoute.add("s1;s6;s8;s11");
+        signalsforEachRoute.add("s12;s9;s3;s2");
+        signalsforEachRoute.add("s12;s7;s5;s2");
+
+
+
+
+        System.out.println("Richard result="+signalsforEachRoute.size());
         for(int z = 0; z < signalsforEachRoute.size(); z++){
             System.out.println(signalsforEachRoute.get(z));
 
@@ -49,19 +61,11 @@ public class Main {
             //check interface demo
             Map<String,Object> map = new HashMap<>();
 
-            String journey = signalsforEachRoute.get(z).substring(0, signalsforEachRoute.get(z).length() - 1);
+            String journey = signalsforEachRoute.get(z).substring( signalsforEachRoute.get(z).length()-2 , signalsforEachRoute.get(z).length() - 1).equals(";")?signalsforEachRoute.get(z).substring(0, signalsforEachRoute.get(z).length() - 1):signalsforEachRoute.get(z);
 
             map.put("journey",journey);
             map.put("journeyId","j"+(z+1));
-//            java.util.List<String> paths = new ArrayList<>();
-//            String[] signal = journey.split(";");
-//            for (int i = 0; i < signal.length ; i++) {
-//                if (i < signal.length - 1) {
-//                    String path = Route.dao.getBySourceAndDest(railway.getRoutes(), signal[i], signal[i + 1]).getPath();
-//                    paths.add(path);
-//                }
-//            }
-//            map.put("path",paths);
+
 
             boolean flag = interlock.check(railway, map);
 
