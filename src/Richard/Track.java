@@ -1,3 +1,5 @@
+package Richard;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -5,12 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.JApplet;
@@ -70,7 +73,7 @@ public class Track extends JApplet{
 	  
 	  public void read() throws FileNotFoundException{
 		//Get scanner instance
-	        Scanner scanner = new Scanner(new File("Map5.txt"));
+	        Scanner scanner = new Scanner(new File("./resource/Map1.txt"));
 	         
 	        //Set the delimiter used in file
 	        scanner.useDelimiter(",");
@@ -872,10 +875,15 @@ public class Track extends JApplet{
 		    
 		    //System.out.println("PATH");
 		    //System.out.print("s1, s13: \n");
-		    track.upPath("s1", "s11");
+		    LinkedList<String> signalsforEachRoute = new LinkedList<String>();
+		    signalsforEachRoute = track.upPath("s1", "s7");
+		    
+		    for(int z = 0; z < signalsforEachRoute.size(); z++){
+				System.out.println(signalsforEachRoute.get(z));
+			}
 		    
 		    //System.out.print("s1, s7: \n");
-		    track.upPath("s1","s8");
+		    /*track.upPath("s1","s8");
 		    
 		    //System.out.print("s6, s7: \n");
 		    track.upPath("s6", "s7");
@@ -890,13 +898,12 @@ public class Track extends JApplet{
 		    track.upPath("s8", "s11");
 		    
 		    //System.out.print("s1, s10: \n");
-		    track.upPath("s1", "s10");
+		    track.upPath("s1", "s10");*/
 	 }
 	
-	public void upPath(String source, String destination){
+	public LinkedList upPath(String source, String destination){
 		
-		System.out.print("All available routes for path " + source + " to " + destination + ":\n");
-		//System.out.print("s1, s10: \n");
+		//System.out.print("All available routes for path " + source + " to " + destination + ":\n");
 		
 		Block sourceBlock = null;
 		Block destinationBlock = null;
@@ -923,13 +930,9 @@ public class Track extends JApplet{
 			}
 		}
 		
-		
-		
-		
 		for(int i = 0; i < tracks.size(); i++){
 			
 			Block currentBlock = null;
-			Point currentPoint = null;
 			Track currentTrack = tracks.get(i);
 					
 			if(currentTrack instanceof Block){
@@ -945,42 +948,7 @@ public class Track extends JApplet{
 				
 			}
 		}
-
-
-
-
-
-		
-		Track tempBlock;
 		double totalRightPoints = 0;
-		Point currentPoint;
-		Block currentBlock;
-		
-		//Trying to calculate total number of right facing points
-		/*while(notFound){
-			
-			tempBlock = findNextBlock(sourceBlock.getRight());
-			
-			if(tempBlock instanceof Point){
-				currentPoint = ((Point) tempBlock);
-				
-				
-				//If the point is a right facing one, add it to the tally
-				if(currentPoint.getDirection() == 1){ //1 means right facing
-					totalRightPoints++;
-				}
-			}
-			//If the block contains the destination signal, stop counting the number of right facing points
-			if(tempBlock instanceof Block){
-				currentBlock = ((Block) tempBlock);
-				
-				if(currentBlock.getID() == destinationBlock.getID()){
-					notFound = false;
-				}
-			}
-		}*/
-		
-		//calculateAllPossibleRoutes(totalRightPoints, sourceBlock, destinationBlock); TEMP COMMENT
 		
 		Track tempTrack;
 		Point tempPoint;
@@ -994,80 +962,15 @@ public class Track extends JApplet{
 					totalRightPoints++;
 				}
 			}
-			
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		//for(int i = 0; i < tracks.size(); i++){
-		/*tempTrack = sourceBlock;
-		while(notFound){//NEED SOMETHING TO DETECT WE REACHED END OF TRACK
-			
 
-			if(tempTrack instanceof Point){
-				currentPoint = ((Point) tempTrack);
-				
-				//If point is left facing, just continue going right
-				if(currentPoint.getDirection() == 0){
-					tempTrack = findNextBlock(currentPoint.getRight());
-					if(tempTrack == null){
-						notFound = false;
-					}
-					
-				}
-				//If point is right facing, make a choice of whether to  go right or top
-				if(currentPoint.getDirection() == 1){
-					
-						totalRightPoints++;
-						tempTrack = findNextBlock(currentPoint.getRight());
-						if(tempTrack == null){
-							notFound = false;
-						}
-				}
-						
-			}
-			else if(tempTrack instanceof Block){
-				currentBlock = ((Block) tempTrack);
-				
-				//If we have arrived at the destination block
-				if(currentBlock.getID() == destinationBlock.getID()){
-					//DO SOMTHING - ie print
-					notFound = false;
-				}
-				else{
-					tempTrack = findNextBlock(currentBlock.getRight());
-					if(tempTrack == null){
-						notFound = false;
-					}
-				}
-				
-			}
-		}*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//System.out.println("Total Right Points: " + totalRightPoints);
-		calculateAllPossibleRoutes(totalRightPoints, sourceBlock, destinationBlock);
+		}
+		LinkedList<String> signalsforEachRoute = new LinkedList<String>();
+		signalsforEachRoute = calculateAllPossibleRoutes(totalRightPoints, sourceBlock, destinationBlock);
+		return signalsforEachRoute;
 	}
 	
 	public void calculateRouteVariations(double totalRightPoints){
 		
-		//for(int i = 0; i < totalRightPoints; i++){
 		int i;
 		for(i = 0; i < 2; i++){
 			
@@ -1088,81 +991,41 @@ public class Track extends JApplet{
 		}
 		
 		count--;
-			
-			
-			/*if(count == totalRightPoints){
-				array.add(value);
-				i = 2;
-				count--;
-				//value = value.substring(0, value.length()-1);
-			}
-			else{
-				count++;
-				if(value.length() == 1){
-					value = value.substring(0, value.length()-1);
-				}
-				
-				value = value + Integer.toString(i);
-				calculateRouteVariations(totalLoops, totalRightPoints);
-				//value = value.substring(0, value.length()-1);
-				
-				
-			}*/
-		
-		
-		
-		
-		
-		
 	}
 	
-	public void calculateAllPossibleRoutes(double totalRightPoints, Block sourceBlock, Block destinationBlock){
+	public LinkedList calculateAllPossibleRoutes(double totalRightPoints, Block sourceBlock, Block destinationBlock){
 		
 		Track tempTrack;
 		Block currentBlock;
 		Point currentPoint;
 		boolean notFound;
 		double numberOfAllowedPoints;
-		List<String> route = new ArrayList<String>();
+		List<Integer> route = new ArrayList<Integer>();
 		List<String> completeRoute = new ArrayList<String>();
-		List<String> finalRoute = new ArrayList<String>();
-		List<String> upOrDown = new ArrayList<String>();
+		
+		LinkedList<String> signalsforEachRoute = new LinkedList<String>();
 		
 		numberOfAllowedPoints = totalRightPoints;
-		//tempTrack = findNextBlock(sourceBlock.getRight());
 		
 		for(double x = 0; x < totalRightPoints; x++){
 			
 		}
 		
-		String value = "";
 		calculateRouteVariations(totalRightPoints);
 		
-		/*System.out.println("NoRightPoints " + totalRightPoints);
-		for(int y = 0; y < array.size(); y++){
-			System.out.println("Val " + array.get(y));
-		}*/
-		
 		int iterator;
-		String currentAttempt;
 		String currentSet;
 		
-		//for(double i = 0; i <= totalRightPoints; i++){
 		for(double i = 0; i < array.size(); i++){
 			
 			currentSet = array.get((int) i);
 			iterator = 0;
 			
-			tempTrack = findNextBlock(sourceBlock.getRight());
-			
-			//System.out.println("No " + numberOfAllowedPoints);
+			tempTrack = findNextBlock(sourceBlock.getID());
 			notFound = true;
-			
 			route.clear();
 			
-			while(notFound){//NEED SOMETHING TO DETECT WE REACHED END OF TRACK
-				
-				
+			while(notFound){
 				
 				if(tempTrack instanceof Point){
 					currentPoint = ((Point) tempTrack);
@@ -1174,15 +1037,13 @@ public class Track extends JApplet{
 							notFound = false;
 						}
 						else{
-							route.add("P" + currentPoint.getID() + " ");
+							route.add(currentPoint.getID());
 						}
 						
 					}
 					//If point is right facing, make a choice of whether to  go right or top
 					if(currentPoint.getDirection() == 1){
 						
-						//currentAttempt = array.get(iterator).
-						//char charOne = (char)	1;
 						if(currentSet.charAt(iterator) == 49){
 							iterator++;
 							
@@ -1192,7 +1053,7 @@ public class Track extends JApplet{
 								notFound = false;
 							}
 							else{
-								route.add("P" + currentPoint.getID() + " ");
+								route.add(currentPoint.getID());
 							}
 						}
 						else{
@@ -1202,7 +1063,7 @@ public class Track extends JApplet{
 								notFound = false;
 							}
 							else{
-								route.add("P" + currentPoint.getID() + " ");
+								route.add(currentPoint.getID());
 							}
 							
 						}
@@ -1211,23 +1072,23 @@ public class Track extends JApplet{
 				}
 				else if(tempTrack instanceof Block){
 					currentBlock = ((Block) tempTrack);
-					route.add("B" + currentBlock.getID() + " ");
+					route.add(currentBlock.getID());
 					
+					//assumption - a block has two signals maximum
 					//If we have arrived at the destination block
 					if(currentBlock.getID() == destinationBlock.getID()){
+						Map<String, Object> map = new HashMap<String, Object>();
 						//DO SOMTHING - ie print
 						notFound = false;
 						
-						
 						boolean contains = false;
 						String fullRoute = "";
+						
 						for(int x = 0; x < route.size(); x++){
 							
-							fullRoute = fullRoute + route.get(x);
-							//System.out.print(route.get(x) + " ");
+							fullRoute = fullRoute + String.valueOf(route.get(x));
 							
 						}
-						//System.out.println(fullRoute);
 						if(completeRoute.size() > 0){
 							for(int v = 0; v < completeRoute.size(); v++){
 								if(completeRoute.get(v).equals(fullRoute)){
@@ -1236,10 +1097,33 @@ public class Track extends JApplet{
 							}
 						}
 						if(contains == false){
-							//System.out.println(fullRoute);
 							completeRoute.add(fullRoute);
-						}
-						
+							
+							String currentSequence  = "";
+							for(int v = 0; v < route.size(); v++){
+								
+								Track trackInstance = findNextBlock(route.get(v));
+								Block blockInstance;
+								
+								if (trackInstance instanceof Block){
+									blockInstance = ((Block) trackInstance);
+									
+									LinkedList<Signal> signals = blockInstance.getSignals();
+									
+									if(signals.size() > 0){
+										for(int u = 0; u < signals.size(); u++){
+											if(signals.get(u).getDirection().equals("up")){
+												currentSequence = currentSequence + signals.get(u).getName() + ";";
+											}
+											
+										}
+										
+									}
+								}
+								
+							}
+							signalsforEachRoute.add(currentSequence);
+						}	
 					}
 					tempTrack = findNextBlock(currentBlock.getRight());
 					if(tempTrack == null){
@@ -1250,16 +1134,14 @@ public class Track extends JApplet{
 			
 			
 		}
-		
-		for(int x = 0; x < completeRoute.size(); x++){
-
-			System.out.print("\t" + completeRoute.get(x) + " ");
-			System.out.println();
-		}
-		System.out.println();
 		completeRoute.clear();
 		array.clear();
 		
+		/*for(int z = 0; z < signalsforEachRoute.size(); z++){
+			System.out.println(signalsforEachRoute.get(z));
+		}*/
+		
+		return signalsforEachRoute;
 	}
 	
 	public Track findNextBlock(int blockID){ //input the ID for the block on the right
@@ -1300,6 +1182,4 @@ public class Track extends JApplet{
 		}
 		
 	}
-	
-
 }

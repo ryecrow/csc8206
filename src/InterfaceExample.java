@@ -1,8 +1,5 @@
 
-import yiwei.Interlock;
-import yiwei.InterlockImpl;
-import yiwei.Railway;
-import yiwei.Route;
+import Yiwei.*;
 
 import java.util.*;
 
@@ -11,7 +8,7 @@ import java.util.*;
  */
 public class InterfaceExample {
     public static void main(String[] args){
-        String filepath = "./resource/map1.json";
+        String filepath = "./resource/map2.json";
         String source = "s1";
         String dest = "s7";
 
@@ -22,7 +19,7 @@ public class InterfaceExample {
 
 
 
-        //check interface demo
+        /*//check interface demo
         Map<String,Object> map = new HashMap<>();
         String journey = "s1;s4;s7";
         map.put("journey",journey);
@@ -41,14 +38,14 @@ public class InterfaceExample {
 
 
         System.out.println(flag);
-        System.out.println(interlock.check(railway, map)+"  "+railway.getJourneys().size());//attempt to add the same journey
+        System.out.println(interlock.check(railway, map)+"  "+railway.getJourneys().size());//attempt to add the same journey*/
         //check ends
 
 
 
 
 
-//        List<Journey> journeys = new ArrayList<>();
+        List<Journey> journeys = new ArrayList<>();
 
       /*  //add a journey to the list
         //map1
@@ -56,17 +53,16 @@ public class InterfaceExample {
         journeys.add(interlock.addJourney(railway,"j2", "s1", "s7", "s1;s6;s7"));
         journeys.add(interlock.addJourney(railway,"j3", "s8", "s2", "s8;s3;s2"));
         journeys.add(interlock.addJourney(railway,"j4", "s8", "s2", "s8;s5;s2"));*/
-/*
         //map2
         journeys.add(interlock.addJourney(railway,"j1",  "s1", "s11", "s1;s4;s8;s11"));
-        journeys.add(interlock.addJourney(railway,"j2",  "s1", "s11", "s1;s6;s10;s11"));
-        journeys.add(interlock.addJourney(railway,"j3",  "s12", "s2", "s12;s9;s3;s2"));
-        journeys.add(interlock.addJourney(railway,"j4",  "s12", "s2", "s12;s9;s5;s2"));
-        journeys.add(interlock.addJourney(railway,"j5",  "s12", "s2", "s12;s7;s3;s2"));
+//        journeys.add(interlock.addJourney(railway,"j2",  "s1", "s11", "s1;s6;s10;s11"));
+//        journeys.add(interlock.addJourney(railway,"j3",  "s12", "s2", "s12;s9;s3;s2"));
+//        journeys.add(interlock.addJourney(railway,"j4",  "s12", "s2", "s12;s9;s5;s2"));
+//        journeys.add(interlock.addJourney(railway,"j5",  "s12", "s2", "s12;s7;s3;s2"));
         journeys.add(interlock.addJourney(railway,"j6",  "s12", "s2", "s12;s7;s5;s2"));
 
         //pass a journey list to the program to let it run
-        railway.setJourneys(journeys);*/
+        railway.setJourneys(journeys);
 
 //        String passby = generateJourneyPassby(railway,passbys);
 //        System.out.println("Chosen by me : "+passby);

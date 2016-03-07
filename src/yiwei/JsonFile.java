@@ -1,4 +1,4 @@
-package yiwei;
+package Yiwei;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

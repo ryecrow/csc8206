@@ -1,9 +1,7 @@
-import java.awt.Color;
-import java.awt.Graphics;
+package Richard;
+
 import java.awt.Graphics2D;
 import java.util.List;
-
-import javax.swing.JFrame;
 
 
 public class Point extends Track{

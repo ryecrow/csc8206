@@ -1,4 +1,4 @@
-package yiwei;
+package Yiwei;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +26,16 @@ public class InterlockImpl implements Interlock {
         if (!journeyExits(railway,signals)) {
 
             String[] signal = signals.split(";");
-            List<String> paths = map.get("path") == null ? new ArrayList<>() : (List<String>) map.get("path");
-            for (int i = 0; i < signal.length; i++) {
-                if (i < signal.length - 1) {
-                    String source = signal[i];
-                    String dest = signal[i + 1];
-                    if (!Route.dao.getBySourceAndDest(railway.getRoutes(), source, dest).getPath().equals(paths.get(i))) {
-                        flag = false;
-                    }
-                }
-            }
+//            List<String> paths = map.get("path") == null ? new ArrayList<>() : (List<String>) map.get("path");
+//            for (int i = 0; i < signal.length; i++) {
+//                if (i < signal.length - 1) {
+//                    String source = signal[i];
+//                    String dest = signal[i + 1];
+//                    if (!Route.dao.getBySourceAndDest(railway.getRoutes(), source, dest).getPath().equals(paths.get(i))) {
+//                        flag = false;
+//                    }
+//                }
+//            }
             Random r = new Random();
             String id = map.get("journeyId") != null ? map.get("journeyId").toString() : "j" + r.nextInt(10);
 

@@ -1,3 +1,4 @@
+package Richard;
 
 public class Signal {
 	
