@@ -1,1 +1,0 @@
-Block,1,0,2,0,Signal,s1,up,Block,2,1,3,0,Signal,s2,down,Point,3,2,4,9,1,0,Block,4,3,5,0,Signal,s5,down,Signal,s6,up,Point,5,4,6,9,0,0,Block,6,5,7,0,Signal,s7,up,Block,7,6,8,0,Signal,s8,down,Block,9,3,5,1,Signal,s3,down,Signal,s4,up
