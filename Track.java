@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,7 +66,7 @@ public class Track extends JApplet{
 	  
 	  public void read() throws FileNotFoundException{
 		  //Get scanner instance
-	        Scanner scanner = new Scanner(new File("Map1.txt"));
+	        Scanner scanner = new Scanner(new File("Map2.txt"));
 	         
 	        //Set the delimiter used in file
 	        scanner.useDelimiter(",");	
@@ -501,14 +503,17 @@ public class Track extends JApplet{
 		    //System.out.print("s1, s13: \n");
 		    LinkedList<String> signalsforEachRoute = new LinkedList<String>();
 		    
-		    String rs = track.findRoute("s8", "s2");
+		    String rs = track.findRoute("s12", "s2");
 		    System.out.println("Here " + rs);
 		    
-		    String rs2 = track.findRoute("s8", "s2");
+		    String rs2 = track.findRoute("s1", "s11");
 		    System.out.println("Here2 " + rs2);
 		    
-		    /*String rs3 = track.findRoute("s12", "s2");
-		    System.out.println("Here3 " + rs3);*/
+		    String rs3 = track.findRoute("s12", "s2");
+		    System.out.println("Here3 " + rs3);
+		    
+		    String rs4 = track.findRoute("s1", "s11");
+		    System.out.println("Here4 " + rs4);
 		    
 		    /*for(int i = 0; i < globalRoutes.size(); i++){
 		    	System.out.println("Glob " + globalRoutes.get(i));
@@ -558,12 +563,15 @@ public class Track extends JApplet{
 		
 		//System.out.print("All available routes for path " + source + " to " + destination + ":\n");
 		
+
 		Block sourceBlock = null;
 		Block destinationBlock = null;
 		boolean notFound = true;
 		boolean upwardSource = false;
 		boolean upwardDestination = true;
 		LinkedList<String> blocksforEachRoute = new LinkedList<String>();
+		int routeOption = 0;
+		boolean down = false;
 		
 		//this for loop finds the block that contains the source signal, which is input into this method via string
 		for(int i = 0; i < tracks.size(); i++){
@@ -660,6 +668,12 @@ public class Track extends JApplet{
 			signalsforEachRoute = calculateAllPossibleRoutes(totalRightPoints, sourceBlock, destinationBlock, "signals");
 			blocksforEachRoute = calculateAllPossibleRoutes(totalRightPoints, sourceBlock, destinationBlock, "id");
 			
+			String tempString = "";
+			tempString = selectRoute(blocksforEachRoute);
+			routeOption = blocksToSignal(tempString, "up");
+			
+			down = false;
+			
 		}
 		else if (sourceBlock.getSignals().get(0).getDirection().equals("down")){
 			for(int i = 0; i < tracks.size(); i++){
@@ -678,6 +692,11 @@ public class Track extends JApplet{
 			blocksforEachRoute = calculateAllPossibleRoutesDown(totalLeftPoints, sourceBlock, destinationBlock, "id");
 			
 			//blocksforEachRoute = calculateAllPossibleRoutes(totalLeftPoints, sourceBlock, destinationBlock, "id");
+			
+			String tempString = "";
+			tempString = selectRoute(blocksforEachRoute);
+			routeOption = blocksToSignal(tempString, "down");
+			down = true;
 		}
 
 		//String selectedRoute = selectRoute(signalsforEachRoute);
@@ -693,12 +712,47 @@ public class Track extends JApplet{
 		//System.out.println(signalsforEachRoute.get(0));
 		//System.out.println(blocksforEachRoute.get(0));
 		
- 		tempString = selectRoute(blocksforEachRoute);
+		
+		//HERE
+ 		/*tempString = selectRoute(blocksforEachRoute);
 		//System.out.println("temp " + tempString);
 		
 		int routeOption = blocksToSignal(tempString);
-		//String routeOption = blocksToSignal(tempString);
+		//String routeOption = blocksToSignal(tempString);*/
 		
+		
+		//LinkedList<String> temp = new LinkedList<String>();
+		//tempo[]
+		
+		
+		if(down){
+			
+			
+			
+			if(signalsforEachRoute.size() > 3){
+				
+				String[] arrayRefVar = new String[signalsforEachRoute.size() - 2];
+				int size = signalsforEachRoute.size();
+				
+				for(int i = 1; i < signalsforEachRoute.size() - 1; i++){
+					arrayRefVar[i - 1] = signalsforEachRoute.get(i);
+				}
+				Collections.reverse(Arrays.asList(arrayRefVar));
+				for(int i = 1; i < signalsforEachRoute.size() - 1; i++){
+					signalsforEachRoute.get(i).replace(signalsforEachRoute.get(i), arrayRefVar[i - 1]);
+					
+					String oldS = signalsforEachRoute.get(i);
+					String newS = arrayRefVar[i - 1];
+					
+					signalsforEachRoute.remove(i);
+					//.replace(oldS, newS);
+					signalsforEachRoute.add(i, newS);
+					//replace(, );
+				}
+			}
+			
+			//String finalSignalRoute = signalsforEachRoute.get(routeOption);
+		}
 		
 		String finalSignalRoute = signalsforEachRoute.get(routeOption); //here
 		
@@ -708,27 +762,61 @@ public class Track extends JApplet{
 		//return signalsforEachRoute;
 		//return selectedRoute;
 		return finalSignalRoute;
+ 		//return tempString;
 	}
 	
-	private int blocksToSignal(String tempString){ //EDIT THIS
+	private int blocksToSignal(String tempString, String type){ //EDIT THIS
 		
 		
 		int returnValue = 0;
+		LinkedList<String> temp = new LinkedList<String>();
+		//tempo[]
 		
-		for(int i = 0; i < globalRoutes.size(); i++){
-			if(tempString.equals(globalRoutes.get(i))){
+		
+		/*if(type.equals("down")){
+			
+			if(globalRoutes.size() > 2){
 				
-				//if(globalUpOrDown.get(iterator).equals("up")){
-					returnValue = i;
-				//}
-				
-				//if(globalUpOrDown.get(iterator).equals("down")){
-					//returnValue = i;
-				//}
+				String[] arrayRefVar = new String[globalRoutes.size() - 2];
+				for(int i = 1; i < globalRoutes.size() - 1; i++){
+					arrayRefVar[i] = globalRoutes.get(i);
+				}
+				Collections.reverse(Arrays.asList(arrayRefVar));
+				for(int i = 1; i < globalRoutes.size() - 1; i++){
+					globalRoutes.get(i).replace(globalRoutes.get(i), arrayRefVar[i]);
+				}
 			}
 			
-		}
+			for(int i = 0; i < globalRoutes.size(); i++){
+				if(tempString.equals(globalRoutes.get(i))){
+
+						returnValue = i;
+				}
+				
+			}
+			
+		}else{*/
+		//NORMAL CODE
+			for(int i = 0; i < globalRoutes.size(); i++){
+				if(tempString.equals(globalRoutes.get(i))){
+					
+					//if(globalUpOrDown.get(iterator).equals("up")){
+						returnValue = i;
+					//}
+					
+					//if(globalUpOrDown.get(iterator).equals("down")){
+						//returnValue = i;
+					//}
+				}
+				
+			}
+		//}
 		iterator++;
+		
+		
+		
+		
+		
 			
 		/*String [] temp = tempString.split(";");
 		for(int i = 0; i < temp.length;i++){
