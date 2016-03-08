@@ -498,16 +498,19 @@ public class Track extends JApplet{
 		    //System.out.println("PATH");
 		    //System.out.print("s1, s13: \n");
 		    LinkedList<String> signalsforEachRoute = new LinkedList<String>();
-		    signalsforEachRoute = track.findRoute("s1", "s11");
+		    String rs;
+		    rs = track.findRoute("s1", "s11");
+		    //System.out.println("Here " + rs);
+		    //signalsforEachRoute = track.findRoute("s1", "s11");
 		    
 		    /*for(int z = 0; z < signalsforEachRoute.size(); z++){
 				System.out.println(signalsforEachRoute.get(z));
 			}*/
 		    
-		    LinkedList<String> signalsforEachRoute2 = new LinkedList<String>();
-		    signalsforEachRoute2 = track.findRoute("s1", "s11");
+		    //LinkedList<String> signalsforEachRoute2 = new LinkedList<String>();
+		    //signalsforEachRoute2 = track.findRoute("s1", "s11");
 		    
-		    signalsforEachRoute2 = track.findRoute("s12", "s2");
+		    //signalsforEachRoute2 = track.findRoute("s12", "s2");
 		    
 		    System.out.println();
 		    /*for(int z = 0; z < signalsforEachRoute.size(); z++){
@@ -533,7 +536,7 @@ public class Track extends JApplet{
 		    track.upPath("s1", "s10");*/
 	 }
 	
-	public LinkedList findRoute(String source, String destination){
+	public String findRoute(String source, String destination){
 	//public String Routes(String source, String destination){
 		
 		
@@ -655,10 +658,16 @@ public class Track extends JApplet{
 			signalsforEachRoute = calculateAllPossibleRoutesDown(totalLeftPoints, sourceBlock, destinationBlock);
 		}
 
-		String selectedRoute = selectRoute(signalsforEachRoute);
-		System.out.println("The chosen route for " + source + " to " + destination + ":\n" + selectedRoute + "\n");
+		//String selectedRoute = selectRoute(signalsforEachRoute);
+		//System.out.println("The chosen route for " + source + " to " + destination + ":\n" + selectedRoute + "\n");
 		//globalRoutes.add(selectedRoute);
-		return signalsforEachRoute;
+		String tempString = "";
+		for(int x = 0; x < signalsforEachRoute.size(); x++){
+			tempString = tempString + signalsforEachRoute.get(x) + ";";
+		}
+		tempString = signalsforEachRoute.get(0);
+		return tempString;
+		//return signalsforEachRoute;
 		//return selectedRoute;
 	}
 	
@@ -999,8 +1008,8 @@ public class Track extends JApplet{
 		
 		completeRoute.clear();
 		array.clear();
-		//return signalsforEachRoute;
-		return routeIDs;
+		return signalsforEachRoute;
+		//return routeIDs;
 	}
 	
 	public Track findNextBlock(int blockID){ //input the ID for the block on the right
