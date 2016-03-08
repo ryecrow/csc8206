@@ -1,4 +1,4 @@
-package Yiwei;
+package yiwei;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,7 @@ public interface Interlock {
     /**
     *  run this network by passing added journeys
     * */
-    public List<Railway> running(Railway railway);
+    public List<String> running(Railway railway);
 
     /**
      *  add a journey by passing the railway object, a id(better to be generated automatically), source signal, dest signal, passby signals

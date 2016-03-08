@@ -1,4 +1,6 @@
-package Yiwei;
+package yiwei;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class InterlockImpl implements Interlock {
         boolean flag = true;
         String signals = map.get("journey")==null?"":map.get("journey").toString();
 
-        if (!journeyExits(railway,signals)) {
+//        if (!journeyExits(railway,signals)) {
 
             String[] signal = signals.split(";");
 
@@ -42,9 +44,9 @@ public class InterlockImpl implements Interlock {
                 railway.getJourneys().add(journey);
             }
 
-        }else {
-            flag = false;
-        }
+//        }else {
+//            flag = false;
+//        }
         return  flag;
     }
 
@@ -134,8 +136,8 @@ public class InterlockImpl implements Interlock {
     }
 
     @Override
-    public List<Railway> running(Railway railway) {
-        List<Railway> railways = new ArrayList<>();//store every move of the railway
+    public List<String> running(Railway railway) {
+        List<String> railways = new ArrayList<>();//store every move of the railway
 
         boolean flag = true;
 
@@ -178,7 +180,8 @@ public class InterlockImpl implements Interlock {
                 System.out.println("Journey " + j.getId() + " block:" + j.getCurrentBlock() + " route:" + j.getCurrentRoute() + " state:" + j.getState());
             }
 
-            railways.add(railway);
+            Gson gson = new Gson();
+            railways.add(gson.toJson(railway));
 
             if (counter == 0) {
                 flag = false;

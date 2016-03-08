@@ -1,32 +1,46 @@
 import Richard.Track;
-import yiwei.Interlock;
-import yiwei.InterlockImpl;
-import yiwei.Railway;
+import com.google.gson.Gson;
+import yiwei.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        String name = "map2";
-        String filepath = "./resource/"+name;
+//        String name = args[0];
+        String name = "./resource/map1";
+//        String journeys  = args[1];
+//        String journeys = "s1;s11,s1;s11,s1;s11,s12;s2,s12;s2,s12;s2,";
+        String journeys  = "s1;s7,s8;s2,";
+
+        String filepath = ""+name;
         List<String> input = new ArrayList<>();
         List<String> output = new ArrayList<>();
 
+        journeys  = journeys.substring(journeys.length() - 2, journeys.length() - 1).equals(",") ? journeys.substring(0, journeys.length() - 1) : journeys;
+        String[] js = journeys.split(",");
+        for (int i = 0; i < js.length; i++) {
+            input.add(js[i]);
+        }
 
-        input.add("s1;s11");
+//        String name = "map2";
+
+
+
+//        input.add("s1;s11");
 //        input.add("s1;s11");
 //        input.add("s1;s11");
 //        input.add("s1;s11");
 //        input.add("s12;s2");
 //        input.add("s12;s2");
-        input.add("s12;s2");
-        input.add("s12;s2");
+//        input.add("s12;s2");
+//        input.add("s12;s2");
 
         Track track = new Track();
         track.read(filepath + ".txt");
@@ -55,6 +69,7 @@ public class Main {
             output.add(rs);
         }
 
+//        track.getGloabl();
 
         LinkedList<String> signalsforEachRoute = new LinkedList<String>();
 
@@ -79,7 +94,24 @@ public class Main {
 
         }
 
-        List<Railway> railways = interlock.running(railway);
-
+        List<String> railways = interlock.running(railway);
+        Gson gson = new Gson();
+        List<Railway> railwayList = new ArrayList<>();
+        for (int i = 0; i < railways.size(); i++) {
+            Railway r = gson.fromJson(railways.get(i),Railway.class);
+            railwayList.add(r);
+//            List<Journey> journeyList = r.getJourneys();
+//            System.out.println("railway i="+i);
+//            for (int j = 0; j < journeyList.size(); j++) {
+//                System.out.println(journeyList.get(j).getId()+" state= "+journeyList.get(j).getState());
+//            }
+//
+//            System.out.println("\n");
+        }
+        try {
+            JsonFile.writeFile("result.json",gson.toJson(railwayList) );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

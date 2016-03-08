@@ -1,5 +1,5 @@
 
-import Yiwei.*;
+import yiwei.*;
 
 import java.util.*;
 
@@ -67,7 +67,7 @@ public class InterfaceExample {
 //        String passby = generateJourneyPassby(railway,passbys);
 //        System.out.println("Chosen by me : "+passby);
 
-        List<Railway> railways = interlock.running(railway);
+//        List<Railway> railways = interlock.running(railway);
     }
 
 }

@@ -1,4 +1,4 @@
-package Yiwei;
+package yiwei;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,4 +1,4 @@
-package Yiwei;
+package yiwei;
 
 /**
  * Created by tommy on 2016/2/15.
