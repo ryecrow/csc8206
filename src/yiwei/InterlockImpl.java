@@ -55,7 +55,7 @@ public class InterlockImpl implements Interlock {
      * route : a route belongs to a journey
      * name : the current block it is on
      */
-    public boolean lock(Railway railway,Journey journey) {
+    public boolean lock(Railway railway, Journey journey) {
         System.out.println("-------------------------lock  checking------------------------------");
         System.out.println("Journey id :" + journey.getId() + " and current route is :" + journey.getCurrentRoute() + " and block is :" + journey.getCurrentBlock());
 

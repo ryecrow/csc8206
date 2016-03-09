@@ -11,7 +11,7 @@ public interface Interlock {
     /**
     * check this journey could be added or not
     * */
-    public boolean check(Railway railway,Map<String,Object> map);
+    public boolean check(Railway railway, Map<String, Object> map);
 
     /**
     *  run this network by passing added journeys
@@ -21,7 +21,7 @@ public interface Interlock {
     /**
      *  add a journey by passing the railway object, a id(better to be generated automatically), source signal, dest signal, passby signals
      * */
-    public Journey addJourney(Railway railway,String journeyId, String source, String dest, String passby);
+    public Journey addJourney(Railway railway, String journeyId, String source, String dest, String passby);
 
     /**
      *  get all routes info by passing filepath of the network file

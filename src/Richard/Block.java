@@ -1,13 +1,12 @@
 package Richard;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class Block extends Track{
+public class Block extends Track {
 	
 	private int ID;
 	private int left;

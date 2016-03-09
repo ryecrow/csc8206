@@ -1,10 +1,10 @@
 package Richard;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.List;
 
 
-public class Point extends Track{
+public class Point extends Track {
 	
 	private int ID;
 	private int left;

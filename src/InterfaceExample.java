@@ -1,7 +1,10 @@
+import yiwei.Interlock;
+import yiwei.InterlockImpl;
+import yiwei.Journey;
+import yiwei.Railway;
 
-import yiwei.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tommy on 03/03/2016 20:39
